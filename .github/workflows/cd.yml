@@ -1,0 +1,23 @@
+name: cd
+
+# Chỉ chạy khi CI thành công
+on:
+  workflow_run:
+    workflows: ['ci']
+    types:
+      - completed
+
+jobs:
+  start:
+    runs-on: node_54
+
+    steps:
+      - name: Dừng container BE cũ
+        run: sudo docker contariner stop con-gateway_dockerCompose
+      - name: Xoá container BE cũ
+        run: sudo docker container remove con-gateway_dockerCompose
+      - name: Xoá image BE
+        run: sudo docker image remove vincent47586/img-gateway:latest
+      - name: Chạy lại source code với docker compose
+        working-directory: /home/ubuntu/nestjs
+        run: sudo docker compose up -d
