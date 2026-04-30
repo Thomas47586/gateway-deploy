@@ -1,0 +1,27 @@
+# Để qua các giai đoạn khác có thể gọi lại
+name: ci
+
+#  Chạy khi nào? Push code lên nhánh main hoặc khi có pull request vào nhánh main
+on:
+  push:
+    branches: [main] # Chỉ chạy khi có push code lên nhánh main
+
+# Làm những công việc gì? Ở đây sẽ có một job là build và test
+jobs:
+  build:
+    # Chọn ten máy chủ
+    runs-on: ubuntu-latest # Máy free của github
+    # Các bước thực hiện trong job
+    steps:
+      # Bước 1:   Clone source code về máy ảo
+      - uses: actions/checkout@v4
+      # Bước 2:   Đăng nhập vào docker hub
+      - name: Login to Docker Hub
+        run: docker login -u vincent47586 -p ${{ secrets.DOCKER_PASSWORD }}
+      # Bước 3:   Build image
+      - name: Build image
+        run: docker build -t vincent47586/img-gateway:latest .
+
+      # Bước 4:  Push image lên docker hub
+      - name: Push image lên docker hub
+        run: docker push vincent47586/img-gateway:latest
