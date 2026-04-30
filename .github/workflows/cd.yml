@@ -13,11 +13,11 @@ jobs:
 
     steps:
       - name: Dừng container BE cũ
-        run: sudo docker container stop con-gateway_dockerCompose
+        run: sudo docker container stop con-gateway_dockerCompose || true
       - name: Xoá container BE cũ
-        run: sudo docker container remove con-gateway_dockerCompose
+        run: sudo docker container remove con-gateway_dockerCompose || true
       - name: Xoá image BE
-        run: sudo docker image remove vincent47586/img-gateway:latest
+        run: sudo docker image remove vincent47586/img-gateway:latest || true
       - name: Chạy lại source code với docker compose
         working-directory: /home/ubuntu/nestjs
         run: sudo docker compose up -d
