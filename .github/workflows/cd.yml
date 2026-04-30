@@ -13,7 +13,7 @@ jobs:
 
     steps:
       - name: Dừng container BE cũ
-        run: sudo docker contariner stop con-gateway_dockerCompose
+        run: sudo docker container stop con-gateway_dockerCompose
       - name: Xoá container BE cũ
         run: sudo docker container remove con-gateway_dockerCompose
       - name: Xoá image BE
